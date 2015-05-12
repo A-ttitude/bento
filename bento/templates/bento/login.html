@@ -14,6 +14,31 @@
 
     <div class="content">
 
+        <form action="." method="GET">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <ul class="errorlist">
+                <li>Entrer une adresse mail valide.</li>
+            </ul>
+            <p>
+                <label for="id_email">Email :</label>
+                <input type="text" name="email" id="id_email" />
+            </p>
+            <ul class="errorlist">
+                <li>Entrer un mot de passe</li>
+
+            </ul>
+            <p>
+                <label for="id_password">Mot de passe :</label>
+                <input type="password" name="password" id="id_password" />
+            </p>
+            <p>
+                <input type="submit" value="Se connecter" />
+                <a href="profil_user.html">Créer un compte</a>
+            </p>
+
+        </form>
+
     </div>
 
 {% endblock %}
