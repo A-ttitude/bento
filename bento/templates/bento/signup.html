@@ -1,0 +1,38 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | Inscription
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>Bento</h1>
+
+        <h2>Inscription</h2>
+    </div>
+
+    <div class="content">
+        <form class="pure-form pure-form-aligned">
+            <fieldset>
+                <div class="pure-control-group">
+                    <input id="username" type="text" placeholder="Nom d'utilisateur" class="pure-input-1-3" required>
+                </div>
+
+                <div class="pure-control-group">
+                    <input id="password" type="password" placeholder="Mot de passe" class="pure-input-1-3" required>
+                </div>
+
+                <div class="pure-control-group">
+                    <input id="email" type="email" placeholder="Adresse mail" class="pure-input-1-3" required>
+                </div>
+
+                <button type="submit" class="pure-button pure-button-primary pure-input-1-3">Inscription</button>
+
+                {% csrf_token %}
+            </fieldset>
+        </form>
+
+    </div>
+
+{% endblock %}

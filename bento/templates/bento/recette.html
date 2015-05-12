@@ -1,0 +1,31 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | Recette
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>Bento</h1>
+
+        <h2>Recette</h2>
+    </div>
+
+    <div class="content">
+
+        <form>
+            <p>
+                <label for="categorie">Catégorie :</label>
+                <select id="categorie">
+                    <option value="entree" {if recetteForm.is_bound %} selected="selected" {% endif %}>
+                        Entrée
+                    </option>
+
+                </select>
+            </p>
+        </form>
+
+    </div>
+
+{% endblock %}

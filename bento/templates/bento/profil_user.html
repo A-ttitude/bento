@@ -1,0 +1,28 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | Inscription
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>Bento</h1>
+
+        <h2>Inscription</h2>
+    </div>
+
+    <div class="content">
+
+        <form action="signup" method="get">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p>
+                <input type="submit" value="Créer un compte" />
+
+            </p>
+        </form>
+
+    </div>
+
+{% endblock %}

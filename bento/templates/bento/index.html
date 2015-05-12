@@ -1,7 +1,7 @@
 {% extends 'bento/_base.html' %}
 
 {% block titre %}
-    Index
+    Bento | Accueil
 {% endblock %}
 
 {% block contenu %}
@@ -13,6 +13,14 @@
     </div>
 
     <div class="content">
+
+        {% for recette in dernieres_recettes %}
+            <h3> {{ recette.titre }}</h3>
+            <p>{{ recette.etapes|truncatewords_html:80 }}</p>
+            <p><a href="{% url "bento.views.lire" recette.id %}"> Voir la recette</a> </p>
+        {% empty %}
+            <p> Aucune recette encore ajoutée</p>
+        {%  endfor %}
 
     </div>
 

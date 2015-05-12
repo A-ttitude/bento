@@ -2,8 +2,10 @@
 
 from django.conf.urls import patterns, url
 
-from bento.views import index
+from bento.views import index, login, signup
 
 urlpatterns = patterns('',
-                       url(r'^$', index, name='index'),
+                       url(r'^$', index, name='accueil'),
+                       url(r'^login$', login, name='connexion'),
+                       url(r'^signup$', signup, name='enregistrer'),
                        )
