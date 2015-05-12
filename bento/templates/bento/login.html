@@ -12,18 +12,15 @@
         <h2>Connexion</h2>
     </div>
 
-    <div class="content">
+    <div id="login" class="content">
 
-        <form action="." method="GET">
+        <form action="." method="GET" class="pure-form pure-form-stacked">
             {% csrf_token %}
             {{ form.as_p }}
-            <p>
-                <input type="submit" value="Se connecter" />
-                <a href="profil_user.html">Créer un compte</a>
-            </p>
+
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Se connecter</button><br />
+            <a class="pure-button pure-input-1-2" href="{% url 'bento:enregistrer' %}">Inscription</a>
 
         </form>
-
-    </div>
 
 {% endblock %}

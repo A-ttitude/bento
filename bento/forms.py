@@ -4,8 +4,12 @@ from bento.models import Recette
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label='Email :')
-    password = forms.CharField(label='Mot de passe :', widget=forms.PasswordInput)
+    email = forms.CharField(label='', widget=forms.EmailInput(attrs={'placeholder': 'Email',
+                                                                     'class': 'pure-input-1-2',
+                                                                     'style': 'display: inline;'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Mot de passe',
+                                                                           'class': 'pure-input-1-2',
+                                                                           'style': 'display: inline;'}))
 
     def clean(self):
         cleaned_data = super(LoginForm, self).clean()
