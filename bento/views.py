@@ -55,3 +55,7 @@ def signup(request):
     else:
         form = UserProfileForm()
         return render_to_response('bento/profil_user.html', {'form' : form})
+
+
+def profil(request):
+    return render(request, 'bento/profil_user.html', {})

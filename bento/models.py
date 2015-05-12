@@ -34,7 +34,7 @@ class Recette(models.Model):
     titre = models.CharField(max_length=255, verbose_name=_("Titre recette"))
     auteur = models.ForeignKey(User, verbose_name=_("Auteur"))
     type = models.OneToOneField(TypeRecette, verbose_name=_("Type"))
-    difficulte = models.IntegerField(choices=DifficulteRecette, max_length=1)
+    difficulte = models.IntegerField(choices=DifficulteRecette)
     cout = models.PositiveIntegerField(verbose_name=_("Coût"))
     temps_preparation = models.TimeField(verbose_name=_("Temps de préparation"))
     temps_cuisson = models.TimeField(verbose_name=_("Temps de cuisson"))
