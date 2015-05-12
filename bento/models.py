@@ -12,6 +12,7 @@ class Ingredients(models.Model):
         verbose_name = _("Ingredient")
         verbose_name_plural = _("Ingredients")
 
+
 DifficulteRecette = (
     (1, 'Novice'),
     (2, 'Facile'),
@@ -27,6 +28,7 @@ class TypeRecette(models.Model):
     class Meta:
         verbose_name = _("TypeRecette")
         verbose_name_plural = _("TypeRecettes")
+
 
 class Recette(models.Model):
     titre = models.CharField(max_length=255, verbose_name=_("Titre recette"))
@@ -60,13 +62,13 @@ class Commentaires(models.Model):
 
 
 # class Chef(User):
-#    nickname = models.CharField(max_length=50)
-#    passwd = models.CharField(max_length=50)
-#    mail = models.CharField(max_length=100)
-#    registryDate = models.DateField(auto_now=True)
+#   nickname = models.CharField(max_length=50)
+#   passwd = models.CharField(max_length=50)
+#   mail = models.CharField(max_length=100)
+#   registryDate = models.DateField(auto_now=True)
 
- #   def __str__(self):
- #       return self.nickname
+#   def __str__(self):
+#       return self.nickname
 
 # class Meta:
 #   verbose_name = _("Chef")
