@@ -3,22 +3,23 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.context_processors import csrf
+
 from bento.forms import LoginForm, UserProfileForm
-from bento.models import TypeRecette, Ingredients, DifficulteRecette, TypeRecette, Recette, Commentaires
+from bento.models import TypeRecette, Recette
 
 
 def index(request):
     categories = TypeRecette.objects.all()
-    return render(request, 'bento/index.html', {'categories-recettes' : categories})
+    return render(request, 'bento/index.html', {'categories-recettes': categories})
 
 
-def lire(request, id):
+def lire(request, _id):
     try:
-        recette = Recette.objects.get(id = id)
+        recette = Recette.objects.get(id=_id)
     except Recette.DoesNotExist:
         raise Http404
 
-    return render(request, 'bento/voir.html', {'recette' : recette})
+    return render(request, 'bento/voir.html', {'recette': recette})
 
 
 def home(request):
@@ -38,24 +39,21 @@ def login(request):
     if len(request.GET) > 0:
         form = LoginForm(request.GET)
         if form.is_valid():
-            return HttpResponseRedirect('bento/accueil.html')
+            return HttpResponseRedirect('index')
     else:
         form = LoginForm()
-        return render(request, 'bento/login.html', {'form' : form})
+        return render(request, 'bento/login.html', {'form': form})
+
 
 def signup(request):
     if len(request.GET) > 0:
         form = UserProfileForm(request.GET)
 
         if form.is_valid():
-            form.save(commit = True)
-            return HttpResponseRedirect('bento/login.html')
+            form.save(commit=True)
+            return HttpResponseRedirect('index')
         else:
-            return render_to_response('bento/login.html', {'form' : form})
+            return render_to_response('bento/signup.html', {'form': form})
     else:
         form = UserProfileForm()
-        return render_to_response('bento/profil_user.html', {'form' : form})
-
-
-def profil(request):
-    return render(request, 'bento/profil_user.html', {})
+        return render_to_response('bento/signup.html', {'form': form})

@@ -18,7 +18,7 @@
             <h3> {{ recette.titre }}</h3>
             <p>{{ recette.etapes|truncatewords_html:80 }}</p>
             <p><a href="{% url "bento.views.lire" recette.id %}"> Voir la recette</a> </p>
-        {% empty %}
+            {% empty %}
             <p> Aucune recette encore ajoutée</p>
         {%  endfor %}
 
