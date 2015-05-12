@@ -6,13 +6,13 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Chef(User):
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
+    nickname = models.CharField(max_length=50)
+    passwd = models.CharField(max_length=50)
     mail = models.CharField(max_length=100)
     registryDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.username
+        return self.nickname
 
     class Meta:
         verbose_name = _("Chef")
@@ -30,4 +30,4 @@ class Chef(User):
 #
 #     class Meta:
 #         verbose_name = _("Recette")
-S#         verbose_name_plural = _("Recettes")
+#         verbose_name_plural = _("Recettes")
