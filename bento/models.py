@@ -22,6 +22,18 @@ DifficulteRecette = (
 )
 
 
+CategorieRecette = (
+    (1, 'Entrée'),
+    (2, 'Plat'),
+    (3, 'Dessert'),
+    (4, 'Apéritif'),
+    (5, 'Fromage'),
+    (6, 'Viande'),
+    (7, 'Poisson'),
+    (8, 'Fruit'),
+)
+
+
 class TypeRecette(models.Model):
     type_r = models.CharField(max_length=25, verbose_name=_("Catégorie"))
 
@@ -33,7 +45,7 @@ class TypeRecette(models.Model):
 class Recette(models.Model):
     titre = models.CharField(max_length=255, verbose_name=_("Titre recette"))
     auteur = models.ForeignKey(User, verbose_name=_("Auteur"))
-    type = models.OneToOneField(TypeRecette, verbose_name=_("Type"))
+    type = models.IntegerField(choices=CategorieRecette)
     difficulte = models.IntegerField(choices=DifficulteRecette)
     cout = models.PositiveIntegerField(verbose_name=_("Coût"))
     temps_preparation = models.TimeField(verbose_name=_("Temps de préparation"))

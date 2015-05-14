@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from bento.models import Recette
+from bento.models import Recette, DifficulteRecette, CategorieRecette
 
 
 class ConnexionForm(forms.Form):
@@ -51,12 +51,12 @@ class InscriptionForm(UserCreationForm):
 class RecetteForm(forms.ModelForm):
     titre = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Titre'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
     auteur = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Auteur'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
-    type = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Catégorie'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
-    difficulte = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Difficulté'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
-    cout = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Coût'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
-    temps_preparation = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Temps de préparation'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
-    temps_cuisson = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Temps de cuisson'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
-    temps_repos = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Temps de repos'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
+    type = forms.ChoiceField(label=_('Catégorie'), choices=CategorieRecette, widget=forms.Select(attrs={'class': 'pure-input-1-2', 'style': 'display: inline;'}))
+    difficulte = forms.ChoiceField(label=_('Difficulté :'), choices=DifficulteRecette, widget=forms.Select(attrs={'class':'pure-input-1-2', 'style': 'display: inline'}))
+    cout = forms.IntegerField(label=_('Coût'), min_value=0, initial=0, widget=forms.NumberInput(attrs={'class': 'pure-input-1-2', 'style': 'display: inline;'}))
+    temps_preparation = forms.IntegerField(label=_('Temps de préparation (minutes)'), min_value=0, initial=0, widget=forms.NumberInput(attrs={'class': 'pure-input-1-2', 'style': 'display: inline;'}))
+    temps_cuisson = forms.IntegerField(label=_('Temps de cuisson (minutes)'), min_value=0, initial=0, widget=forms.NumberInput(attrs={'class': 'pure-input-1-2', 'style': 'display: inline;'}))
+    temps_repos = forms.IntegerField(label=_('Temps de repos (minutes)'), min_value=0, initial=0, widget=forms.NumberInput(attrs={'class': 'pure-input-1-2', 'style': 'display: inline;'}))
     ingredients = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': _('Ingrédients'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
     etape = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': _('Etapes'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
     photo = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Photo'), 'class': 'pure-input-1-2', 'style': 'display: inline;'}))
