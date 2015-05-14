@@ -14,12 +14,12 @@
 
     <div class="content">
 
-        <form action="signup" method="GET" class="pure-form pure-form-stacked">
+        <form method="post" action="{% url 'bento:inscription' %}" class="pure-form pure-form-stacked">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ formulaire }}
+            <br /><br />
             <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Inscription</button><br />
             <a class="pure-button pure-input-1-2" href="{% url 'bento:connexion' %}">Retour</a>
-
         </form>
 
     </div>
