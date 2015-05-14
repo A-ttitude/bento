@@ -4,7 +4,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.context_processors import csrf
 
-from bento.forms import LoginForm, UserProfileForm
+from bento.forms import LoginForm, UserProfileForm, RecetteForm
 from bento.models import TypeRecette, Recette
 
 
@@ -57,3 +57,17 @@ def signup(request):
     else:
         form = UserProfileForm()
         return render_to_response('bento/signup.html', {'form': form})
+
+
+def addrec(request):
+    if len(request.GET) > 0:
+        form = RecetteForm(request.GET)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect('bento/index.html')
+        else:
+            return render_to_response('bento/recette.html')
+    else:
+        form = RecetteForm()
+        return render_to_response('bento/recette.html', {'form': form})
