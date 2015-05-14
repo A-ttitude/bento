@@ -1,7 +1,12 @@
 <a class="pure-menu-heading" href="{% url 'bento:index' %}">Bento</a>
 
 <ul class="pure-menu-list">
-    <li class="pure-menu-item"><a href="{% url 'bento:connexion' %}" class="pure-menu-link">Connexion</a></li>
-    <li class="pure-menu-item"><a href="{% url 'bento:inscription' %}" class="pure-menu-link">Inscription</a></li>
+    {% if not user.is_authenticated %}
+        <li class="pure-menu-item"><a href="{% url 'bento:connexion' %}" class="pure-menu-link">Connexion</a></li>
+        <li class="pure-menu-item"><a href="{% url 'bento:inscription' %}" class="pure-menu-link">Inscription</a></li>
+    {% else %}
+        <li class="pure-menu-item"><a href="{% url 'bento:deconnexion' %}" class="pure-menu-link">Déconnexion</a></li>
+    {% endif %}
     <li class="pure-menu-item"><a href="{% url 'bento:index' %}" class="pure-menu-link menu-item-divided">Accueil</a></li>
+    <li class="pure-menu-item"><a href="{% url 'bento:ajoutrecette' %}" class="pure-menu-link">Recette</a></li>
 </ul>

@@ -1,7 +1,7 @@
 {% extends 'bento/_base.html' %}
 
 {% block titre %}
-    Bento | Recette
+    Bento | Ajout Recette
 {% endblock %}
 
 {% block contenu %}
@@ -9,19 +9,17 @@
     <div class="header">
         <h1>Bento</h1>
 
-        <h2>Recette</h2>
+        <h2>Ajouter une Recette</h2>
     </div>
 
     <div class="content">
 
-        <form action="." method="GET" class="pure-form pure-form-stacked">
+        <form method="post" action="{% url 'bento:ajoutrecette' %}"  class="pure-form pure-form-stacked">
             {% csrf_token %}
-            <p>
-               {{ form.as_p }}
-            </p>
+            {{ formulaire }}
+            <br /><br />
             <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Ajouter recette</button><br />
-            <a class="pure-button pure-input-1-2" href="{% url 'bento:accueil' %}">Retour</a>
-
+            <a class="pure-button pure-input-1-2" href="{% url 'bento:index' %}">Retour</a>
         </form>
 
     </div>

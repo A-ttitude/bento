@@ -1,10 +1,11 @@
 # coding: utf-8
 
 from django.utils.translation import ugettext_lazy as _
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from bento.forms import ConnexionForm, InscriptionForm, RecetteForm
 from bento.models import TypeRecette, Recette
@@ -29,6 +30,12 @@ def view_recette(request, id_recette):
     return HttpResponse(text)
 
 
+@login_required
+def deconnexion(request):
+    logout(request)
+    return render(request, 'bento/index.html')
+
+
 # Formulaires
 
 def connexion(request):
@@ -41,7 +48,7 @@ def connexion(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('bento:index')
+                    return render(request, 'bento/index.html')
                 else:
                     messages.error(request, _('Votre compte est désactivé.'))
             else:
@@ -58,22 +65,24 @@ def inscription(request):
 
         if formulaire.is_valid():
             formulaire.save(commit=True)
-            return redirect('bento:connexion')
+            return render(request, 'bento/connexion.html')
     else:
         formulaire = InscriptionForm()
 
     return render(request, 'bento/inscription.html', {'formulaire': formulaire})
 
 
-def ajoutRecette(request):
-    if len(request.GET) > 0:
-        form = RecetteForm(request.GET)
+@login_required
+def ajoutrecette(request):
+    if request.method == 'POST':
+        formulaire = RecetteForm(request.POST)
 
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('bento:index')
+        if formulaire.is_valid():
+            formulaire.save(commit=True)
+            return render(request, 'bento/index.html')
         else:
-            return render('bento/recette.html')
+            return render(request, 'bento/recette.html', {'formulaire': formulaire})
     else:
-        form = RecetteForm()
-        return render('bento/recette.html', {'form': form})
+        formulaire = RecetteForm()
+
+    return render(request, 'bento/recette.html', {'formulaire': formulaire})

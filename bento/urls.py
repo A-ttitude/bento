@@ -2,12 +2,13 @@
 
 from django.conf.urls import patterns, url
 
-from bento.views import index, connexion, inscription, ajoutRecette
+from bento.views import index, connexion, deconnexion, inscription, ajoutrecette
 
 urlpatterns = patterns('',
                        url(r'^$', index, name='index'),
                        url(r'^index$', index, name='index'),
                        url(r'^connexion$', connexion, name='connexion'),
+                       url(r'^deconnexion$', deconnexion, name='deconnexion'),
                        url(r'^inscription$', inscription, name='inscription'),
-                       url(r'^ajoutRecette$', ajoutRecette, name='ajoutRecette'),
+                       url(r'^ajoutrecette$', ajoutrecette, name='ajoutrecette'),
                        )
