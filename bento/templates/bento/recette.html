@@ -14,16 +14,14 @@
 
     <div class="content">
 
-        <form>
+        <form action="." method="GET" class="pure-form pure-form-stacked">
+            {% csrf_token %}
             <p>
-                <label for="categorie">Catégorie :</label>
-                <select id="categorie">
-                    <option value="entree" {if recetteForm.is_bound %} selected="selected" {% endif %}>
-                        Entrée
-                    </option>
-
-                </select>
+               {{ form.as_p }}
             </p>
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Ajouter recette</button><br />
+            <a class="pure-button pure-input-1-2" href="{% url 'bento:accueil' %}">Retour</a>
+
         </form>
 
     </div>

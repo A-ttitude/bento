@@ -6,7 +6,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
-from bento.forms import ConnexionForm, InscriptionForm
+from bento.forms import ConnexionForm, InscriptionForm, RecetteForm
 from bento.models import TypeRecette, Recette
 
 
@@ -25,7 +25,7 @@ def lire(request, _id):
 
 
 def view_recette(request, id_recette):
-    text = "Vous avez demandé la recette n°{0}".format(id_recette)
+    text = _("Vous avez demandé la recette n°{0}").format(id_recette)
     return HttpResponse(text)
 
 
@@ -63,3 +63,17 @@ def inscription(request):
         formulaire = InscriptionForm()
 
     return render(request, 'bento/inscription.html', {'formulaire': formulaire})
+
+
+def ajoutRecette(request):
+    if len(request.GET) > 0:
+        form = RecetteForm(request.GET)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('bento:index')
+        else:
+            return render('bento/recette.html')
+    else:
+        form = RecetteForm()
+        return render('bento/recette.html', {'form': form})
