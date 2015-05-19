@@ -5,33 +5,33 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+DifficulteRecette = (
+    (1, _('Novice')),
+    (2, _('Facile')),
+    (3, _('Moyen')),
+    (4, _('Difficile')),
+    (5, _('Expert')),
+)
+
+
+CategorieRecette = (
+    (1, _('Entrée')),
+    (2, _('Plat')),
+    (3, _('Dessert')),
+    (4, _('Apéritif')),
+    (5, _('Fromage')),
+    (6, _('Viande')),
+    (7, _('Poisson')),
+    (8, _('Fruit')),
+)
+
+
 class Ingredients(models.Model):
     nom_i = models.CharField(max_length=100, verbose_name=_("Ingrédient"))
 
     class Meta:
         verbose_name = _("Ingredient")
         verbose_name_plural = _("Ingredients")
-
-
-DifficulteRecette = (
-    (1, 'Novice'),
-    (2, 'Facile'),
-    (3, 'Moyen'),
-    (4, 'Difficile'),
-    (5, 'Expert'),
-)
-
-
-CategorieRecette = (
-    (1, 'Entrée'),
-    (2, 'Plat'),
-    (3, 'Dessert'),
-    (4, 'Apéritif'),
-    (5, 'Fromage'),
-    (6, 'Viande'),
-    (7, 'Poisson'),
-    (8, 'Fruit'),
-)
 
 
 class TypeRecette(models.Model):
@@ -45,16 +45,16 @@ class TypeRecette(models.Model):
 class Recette(models.Model):
     titre = models.CharField(max_length=255, verbose_name=_("Titre recette"))
     auteur = models.ForeignKey(User, verbose_name=_("Auteur"))
-    type = models.IntegerField(choices=CategorieRecette)
-    difficulte = models.IntegerField(choices=DifficulteRecette)
+    type = models.PositiveSmallIntegerField(choices=CategorieRecette)
+    difficulte = models.PositiveSmallIntegerField(choices=DifficulteRecette)
     cout = models.PositiveIntegerField(verbose_name=_("Coût"))
     temps_preparation = models.TimeField(verbose_name=_("Temps de préparation"))
     temps_cuisson = models.TimeField(verbose_name=_("Temps de cuisson"))
-    temps_repos = models.TimeField(verbose_name=_("Temps de repos"), null=True)
+    temps_repos = models.TimeField(verbose_name=_("Temps de repos"), blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredients, verbose_name=_("Ingrédients"))
     etape = models.TextField(verbose_name=_("Etapes"))
     note_moyenne = models.PositiveIntegerField(verbose_name=_("Note obtenue"))
-    photo = models.ImageField(verbose_name=_("Photos"))
+    photo = models.ImageField(verbose_name=_("Photos"), blank=True, null=True)
 
     class Meta:
         verbose_name = _("Recette")

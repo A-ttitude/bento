@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
@@ -10,6 +11,15 @@ from django.contrib.auth.decorators import login_required
 from bento.forms import ConnexionForm, InscriptionForm, RecetteForm
 from bento.models import TypeRecette, Recette
 
+
+# Class
+
+class Recettes(generic.ListView):
+    model = Recette
+    template_name = 'bento/recette.html'
+
+
+# Def
 
 def index(request):
     categories = TypeRecette.objects.all()
@@ -30,7 +40,6 @@ def view_recette(request, id_recette):
     return HttpResponse(text)
 
 
-@login_required
 def deconnexion(request):
     logout(request)
     return render(request, 'bento/index.html')
@@ -75,14 +84,14 @@ def inscription(request):
 @login_required
 def ajoutrecette(request):
     if request.method == 'POST':
-        formulaire = RecetteForm(request.POST)
+        formulaire = RecetteForm(request.POST, initial={'auteur': request.user.username})
 
         if formulaire.is_valid():
             formulaire.save(commit=True)
-            return render(request, 'bento/index.html')
+            return render(request, 'bento/recette.html')
         else:
-            return render(request, 'bento/recette.html', {'formulaire': formulaire})
+            return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
     else:
-        formulaire = RecetteForm()
+        formulaire = RecetteForm(initial={'auteur': request.user.username})
 
-    return render(request, 'bento/recette.html', {'formulaire': formulaire})
+    return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})

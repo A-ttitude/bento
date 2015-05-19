@@ -19,28 +19,27 @@ class ConnexionForm(forms.Form):
 
 
 class InscriptionForm(UserCreationForm):
-    username = forms.CharField(label=_('Identifiant'), widget=forms.TextInput(attrs={'placeholder': _('Identifiant'),
+    username = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Identifiant'),
                                                                                      'class': 'pure-input-1-2',
                                                                                      'style': 'display: inline;'}))
 
-    first_name = forms.CharField(label=_('Prénom'), widget=forms.TextInput(attrs={'placeholder': _('Prénom'),
+    first_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Prénom'),
                                                                                   'class': 'pure-input-1-2',
                                                                                   'style': 'display: inline;'}))
 
-    last_name = forms.CharField(label=_('Nom'), widget=forms.TextInput(attrs={'placeholder': _('Nom'),
+    last_name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Nom'),
                                                                               'class': 'pure-input-1-2',
                                                                               'style': 'display: inline;'}))
 
-    email = forms.CharField(label=_('Email'), widget=forms.EmailInput(attrs={'placeholder': _('Email'),
+    email = forms.CharField(label='', widget=forms.EmailInput(attrs={'placeholder': _('Email'),
                                                                              'class': 'pure-input-1-2',
                                                                              'style': 'display: inline;'}))
 
-    password1 = forms.CharField(label=_('Mot de passe'),
-                                widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe'),
-                                                                  'class': 'pure-input-1-2',
-                                                                  'style': 'display: inline;'}))
+    password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe'),
+                                                                            'class': 'pure-input-1-2',
+                                                                            'style': 'display: inline;'}))
 
-    password2 = forms.CharField(label=_('Confirmation du mot de passe'),
+    password2 = forms.CharField(label='',
                                 widget=forms.PasswordInput(attrs={'placeholder': _('Confirmation du mot de passe'),
                                                                   'class': 'pure-input-1-2',
                                                                   'style': 'display: inline;'}))
@@ -57,6 +56,7 @@ class RecetteForm(forms.ModelForm):
 
     auteur = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Auteur'),
                                                                      'class': 'pure-input-1-2',
+                                                                     'readonly': 'readonly',
                                                                      'style': 'display: inline;'}))
 
     type = forms.ChoiceField(label=_('Catégorie'), choices=CategorieRecette,
