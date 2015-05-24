@@ -1,0 +1,57 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | {{ recette.titre }}
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>Bento</h1>
+
+        <h2> {{ recette.titre }}</h2>
+    </div>
+
+    <div class="content">
+
+            <table class="pure-table pure-table-bordered" width="100%">
+                <thead>
+                    <tr>
+                        <th>Titre </th>
+                        <th>Auteur</th>
+                        <th>Type</th>
+                        <th>Difficulte</th>
+                        <th>Cout</th>
+                        <th>Temps de préparation</th>
+                        <th>Temps de cuisson</th>
+                        <th>Temps de repos</th>
+                        <th>Ingredients</th>
+                        <th>Etape</th>
+                        <th>Note moyenne</th>
+                        <th>Photo</th>
+                     </tr>
+                </thead>
+                <tbody>
+                 <tr>
+                     <td>{{ recette.titre  }}</td>
+                     <td>{{ recette.auteur }}</td>
+                     <td>{{ recette.get_type_display }}</td>
+                     <td>{{ recette.get_difficulte_display }}</td>
+                     <td>{{ recette.cout }}</td>
+                     <td>{{ recette.temps_preparation }}</td>
+                     <td>{{ recette.temps_cuisson }}</td>
+                     <td>{{ recette.temps_repos }}</td>
+                     <td>{{ recette.ingredients }}</td>
+                     <td>{{ recette.etape }}</td>
+                     <td>{{ recette.note_moyenne }}</td>
+                     <td>{{ recette.photo }}</td>
+                </tr>
+                 </tbody>
+            </table><br />
+
+
+        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:recettes' %}">Retour à la liste</a>
+
+    </div>
+
+{% endblock %}

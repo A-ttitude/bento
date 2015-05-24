@@ -2,7 +2,7 @@
 
 from django.conf.urls import patterns, url
 
-from bento.views import index, connexion, deconnexion, inscription, Recettes, ajoutrecette
+from bento.views import index, connexion, deconnexion, inscription, Recettes, ajoutrecette, modifrecette, voirrecette
 
 urlpatterns = patterns('',
                        url(r'^$', index, name='index'),
@@ -12,4 +12,6 @@ urlpatterns = patterns('',
                        url(r'^inscription$', inscription, name='inscription'),
                        url(r'^recettes$', Recettes.as_view(), name='recettes'),
                        url(r'^ajoutrecette$', ajoutrecette, name='ajoutrecette'),
+                       url(r'^modifrecette/(\d+)$', modifrecette, name='modifrecette'),
+                       url(r'^recette/(\d+)$', voirrecette, name='voirrecette'),
                        )

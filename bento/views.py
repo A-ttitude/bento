@@ -95,3 +95,20 @@ def ajoutrecette(request):
         formulaire = RecetteForm(initial={'auteur': request.user.username})
 
     return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
+
+
+@login_required
+def modifrecette(request, id_recette):
+    if id_recette:
+        if len(request.GET) > 0:
+            #if form.is_valid():
+                pass
+
+
+def voirrecette(request, id_recette):
+    if id_recette:
+        if id_recette in request.GET and request.GET['id'] !='':
+            result = Recette.objects.filter(id=request.GET['id'])
+            return render(request, 'bento/une_recette.html')
+        else:
+            messages.error(request, _('Recette inexistante.'))
