@@ -1,9 +1,11 @@
 # coding: utf-8
 
+from decimal import Decimal
+
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
-
 
 DifficulteRecette = (
     (1, _('Novice')),
@@ -12,7 +14,6 @@ DifficulteRecette = (
     (4, _('Difficile')),
     (5, _('Expert')),
 )
-
 
 CategorieRecette = (
     (1, _('Entrée')),
@@ -26,35 +27,24 @@ CategorieRecette = (
 )
 
 
-class Ingredients(models.Model):
-    nom_i = models.CharField(max_length=100, verbose_name=_("Ingrédient"))
-
-    class Meta:
-        verbose_name = _("Ingredient")
-        verbose_name_plural = _("Ingredients")
-
-
-class TypeRecette(models.Model):
-    type_r = models.CharField(max_length=25, verbose_name=_("Catégorie"))
-
-    class Meta:
-        verbose_name = _("TypeRecette")
-        verbose_name_plural = _("TypeRecettes")
-
-
 class Recette(models.Model):
     titre = models.CharField(max_length=255, verbose_name=_("Titre recette"))
     auteur = models.ForeignKey(User, verbose_name=_("Auteur"))
     type = models.PositiveSmallIntegerField(choices=CategorieRecette)
     difficulte = models.PositiveSmallIntegerField(choices=DifficulteRecette)
-    cout = models.PositiveIntegerField(verbose_name=_("Coût"))
+    cout = models.DecimalField(verbose_name=_("Coût"), decimal_places=2, max_digits=12,
+                               validators=[MinValueValidator(Decimal('0.00'))])
     temps_preparation = models.TimeField(verbose_name=_("Temps de préparation"))
-    temps_cuisson = models.TimeField(verbose_name=_("Temps de cuisson"))
+    temps_cuisson = models.TimeField(verbose_name=_("Temps de cuisson"), blank=True, null=True)
     temps_repos = models.TimeField(verbose_name=_("Temps de repos"), blank=True, null=True)
-    ingredients = models.ManyToManyField(Ingredients, verbose_name=_("Ingrédients"))
+    ingredients = models.TextField(verbose_name=_("Ingrédients"))
     etape = models.TextField(verbose_name=_("Etapes"))
-    note_moyenne = models.PositiveIntegerField(verbose_name=_("Note obtenue"))
-    photo = models.ImageField(verbose_name=_("Photos"), blank=True, null=True)
+    note_moyenne = models.PositiveSmallIntegerField(verbose_name=_("Note obtenue"), default=0)
+    photo = models.TextField(verbose_name=_("Photos"), blank=True, null=True)
+
+    def __str__(self):
+        return '[' + self.auteur.username + '] ' + self.titre + ' - ' + self.get_type_display() + ' ' \
+               + self.get_difficulte_display()
 
     class Meta:
         verbose_name = _("Recette")

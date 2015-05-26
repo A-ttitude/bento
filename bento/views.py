@@ -2,47 +2,32 @@
 
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from bento.forms import ConnexionForm, InscriptionForm, RecetteForm
-from bento.models import TypeRecette, Recette
+from bento.models import Recette
 
 
 # Class
 
 class Recettes(generic.ListView):
     model = Recette
-    template_name = 'bento/recette.html'
+    template_name = 'bento/index.html'
+
+
+class VoirRecette(generic.DetailView):
+    model = Recette
+    template_name = 'bento/une_recette.html'
 
 
 # Def
 
-def index(request):
-    categories = TypeRecette.objects.all()
-    return render(request, 'bento/index.html', {'categories-recettes': categories})
-
-
-def lire(request, _id):
-    try:
-        recette = Recette.objects.get(id=_id)
-    except Recette.DoesNotExist:
-        raise Http404
-
-    return render(request, 'bento/voir.html', {'recette': recette})
-
-
-def view_recette(request, id_recette):
-    text = _("Vous avez demandé la recette n°{0}").format(id_recette)
-    return HttpResponse(text)
-
-
 def deconnexion(request):
     logout(request)
-    return render(request, 'bento/index.html')
+    return redirect('/index')
 
 
 # Formulaires
@@ -57,7 +42,7 @@ def connexion(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return render(request, 'bento/index.html')
+                    return redirect('/index')
                 else:
                     messages.error(request, _('Votre compte est désactivé.'))
             else:
@@ -74,7 +59,7 @@ def inscription(request):
 
         if formulaire.is_valid():
             formulaire.save(commit=True)
-            return render(request, 'bento/connexion.html')
+            return redirect('/connexion')
     else:
         formulaire = InscriptionForm()
 
@@ -84,15 +69,15 @@ def inscription(request):
 @login_required
 def ajoutrecette(request):
     if request.method == 'POST':
-        formulaire = RecetteForm(request.POST, initial={'auteur': request.user.username})
+        formulaire = RecetteForm(request.POST, initial={'auteur': request.user})
 
         if formulaire.is_valid():
             formulaire.save(commit=True)
-            return render(request, 'bento/recette.html')
+            return redirect('/index')
         else:
             return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
     else:
-        formulaire = RecetteForm(initial={'auteur': request.user.username})
+        formulaire = RecetteForm(initial={'auteur': request.user})
 
     return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
 
@@ -101,14 +86,5 @@ def ajoutrecette(request):
 def modifrecette(request, id_recette):
     if id_recette:
         if len(request.GET) > 0:
-            #if form.is_valid():
-                pass
-
-
-def voirrecette(request, id_recette):
-    if id_recette:
-        if id_recette in request.GET and request.GET['id'] !='':
-            result = Recette.objects.filter(id=request.GET['id'])
-            return render(request, 'bento/une_recette.html')
-        else:
-            messages.error(request, _('Recette inexistante.'))
+            # if form.is_valid():
+            pass

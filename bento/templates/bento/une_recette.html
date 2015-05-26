@@ -7,50 +7,25 @@
 {% block contenu %}
 
     <div class="header">
-        <h1>Bento</h1>
+        <h1>{{ recette.titre }}</h1>
 
-        <h2> {{ recette.titre }}</h2>
+        <h2>{{ recette.get_type_display }} - {{ recette.get_difficulte_display }}</h2>
     </div>
 
     <div class="content">
 
-            <table class="pure-table pure-table-bordered" width="100%">
-                <thead>
-                    <tr>
-                        <th>Titre </th>
-                        <th>Auteur</th>
-                        <th>Type</th>
-                        <th>Difficulte</th>
-                        <th>Cout</th>
-                        <th>Temps de préparation</th>
-                        <th>Temps de cuisson</th>
-                        <th>Temps de repos</th>
-                        <th>Ingredients</th>
-                        <th>Etape</th>
-                        <th>Note moyenne</th>
-                        <th>Photo</th>
-                     </tr>
-                </thead>
-                <tbody>
-                 <tr>
-                     <td>{{ recette.titre  }}</td>
-                     <td>{{ recette.auteur }}</td>
-                     <td>{{ recette.get_type_display }}</td>
-                     <td>{{ recette.get_difficulte_display }}</td>
-                     <td>{{ recette.cout }}</td>
-                     <td>{{ recette.temps_preparation }}</td>
-                     <td>{{ recette.temps_cuisson }}</td>
-                     <td>{{ recette.temps_repos }}</td>
-                     <td>{{ recette.ingredients }}</td>
-                     <td>{{ recette.etape }}</td>
-                     <td>{{ recette.note_moyenne }}</td>
-                     <td>{{ recette.photo }}</td>
-                </tr>
-                 </tbody>
-            </table><br />
+         <p>{{ recette.auteur }}</p>
+         <p>{{ recette.cout }}</p>
+         <p>{{ recette.temps_preparation }}</p>
+         <p>{{ recette.temps_cuisson }}</p>
+         <p>{{ recette.temps_repos }}</p>
+         <p>{{ recette.ingredients }}</p>
+         <p>{{ recette.etape }}</p>
+         <p>{{ recette.note_moyenne }}</p>
+         <p><img src="{{ recette.photo }}" /></p>
 
 
-        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:recettes' %}">Retour à la liste</a>
+        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:index' %}">Retour à la liste</a>
 
     </div>
 
