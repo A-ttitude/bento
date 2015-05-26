@@ -2,12 +2,15 @@
 
 from django.conf.urls import patterns, url
 
-from bento.views import index, login, signup, addrec
+from bento.views import connexion, deconnexion, inscription, Recettes, ajoutrecette, modifrecette, VoirRecette
 
 urlpatterns = patterns('',
-                       url(r'^$', index, name='accueil'),
-                       url(r'^index$', index, name='accueil'),
-                       url(r'^login$', login, name='connexion'),
-                       url(r'^signup$', signup, name='enregistrer'),
-                       url(r'^addrec$', addrec, name='recette'),
+                       url(r'^$', Recettes.as_view(), name='index'),
+                       url(r'^index$', Recettes.as_view(), name='index'),
+                       url(r'^connexion$', connexion, name='connexion'),
+                       url(r'^deconnexion$', deconnexion, name='deconnexion'),
+                       url(r'^inscription$', inscription, name='inscription'),
+                       url(r'^ajoutrecette$', ajoutrecette, name='ajoutrecette'),
+                       url(r'^modifrecette/(?P<pk>\d+)$', modifrecette, name='modifrecette'),
+                       url(r'^recette/(?P<pk>\d+)/$', VoirRecette.as_view(), name='voirrecette'),
                        )

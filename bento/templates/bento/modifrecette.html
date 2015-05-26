@@ -1,0 +1,27 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | Modifier Recette
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>Bento</h1>
+
+        <h2>Modifier la recette</h2>
+    </div>
+
+    <div class="content">
+
+        <form method="post" action="{% url 'bento:modifrecette' %}"  class="pure-form pure-form-stacked">
+            {% csrf_token %}
+            {{ formulaire }}
+            <br /><br />
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Modifier</button><br />
+            <a class="pure-button pure-input-1-2" href="{{request.META.HTTP_REFERER}}">Retour</a>
+        </form>
+
+    </div>
+
+{% endblock %}

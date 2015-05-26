@@ -1,73 +1,90 @@
 # coding: utf-8
 
-from django.shortcuts import render, render_to_response
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.core.context_processors import csrf
+from django.views import generic
+from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from bento.forms import LoginForm, UserProfileForm, RecetteForm
-from bento.models import TypeRecette, Recette
-
-
-def index(request):
-    categories = TypeRecette.objects.all()
-    return render(request, 'bento/index.html', {'categories-recettes': categories})
+from bento.forms import ConnexionForm, InscriptionForm, RecetteForm
+from bento.models import Recette
 
 
-def lire(request, _id):
-    try:
-        recette = Recette.objects.get(id=_id)
-    except Recette.DoesNotExist:
-        raise Http404
+# Class
 
-    return render(request, 'bento/voir.html', {'recette': recette})
+class Recettes(generic.ListView):
+    model = Recette
+    template_name = 'bento/index.html'
 
 
-def home(request):
-    text = "<h1> Bienvenue sur mon site de recette </h1>"
-    return HttpResponse(text)
+class VoirRecette(generic.DetailView):
+    model = Recette
+    template_name = 'bento/une_recette.html'
 
 
-def view_recette(request, id_recette):
-    text = "Vous avez demandé la recette n°{0}".format(id_recette)
-    return HttpResponse(text)
+# Def
+
+def deconnexion(request):
+    logout(request)
+    return redirect('/index')
 
 
-def login(request):
-    c = {}
-    c.update(csrf(request))
+# Formulaires
 
-    if len(request.GET) > 0:
-        form = LoginForm(request.GET)
-        if form.is_valid():
-            return HttpResponseRedirect('index')
+def connexion(request):
+    if request.method == 'POST':
+        formulaire = ConnexionForm(request.POST)
+
+        if formulaire.is_valid():
+            user = authenticate(username=formulaire.cleaned_data['identifiant'],
+                                password=formulaire.cleaned_data['motpasse'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('/index')
+                else:
+                    messages.error(request, _('Votre compte est désactivé.'))
+            else:
+                messages.error(request, _('Vos identifiants sont invalides.'))
     else:
-        form = LoginForm()
-        return render(request, 'bento/login.html', {'form': form})
+        formulaire = ConnexionForm()
+
+    return render(request, 'bento/connexion.html', {'formulaire': formulaire})
 
 
-def signup(request):
-    if len(request.GET) > 0:
-        form = UserProfileForm(request.GET)
+def inscription(request):
+    if request.method == 'POST':
+        formulaire = InscriptionForm(request.POST)
 
-        if form.is_valid():
-            form.save(commit=True)
-            return HttpResponseRedirect('index')
+        if formulaire.is_valid():
+            formulaire.save(commit=True)
+            return redirect('/connexion')
+    else:
+        formulaire = InscriptionForm()
+
+    return render(request, 'bento/inscription.html', {'formulaire': formulaire})
+
+
+@login_required
+def ajoutrecette(request):
+    if request.method == 'POST':
+        formulaire = RecetteForm(request.POST, initial={'auteur': request.user})
+
+        if formulaire.is_valid():
+            formulaire.save(commit=True)
+            return redirect('/index')
         else:
-            return render_to_response('bento/signup.html', {'form': form})
+            return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
     else:
-        form = UserProfileForm()
-        return render_to_response('bento/signup.html', {'form': form})
+        formulaire = RecetteForm(initial={'auteur': request.user})
+
+    return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
 
 
-def addrec(request):
-    if len(request.GET) > 0:
-        form = RecetteForm(request.GET)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return HttpResponseRedirect('bento/index.html')
-        else:
-            return render_to_response('bento/recette.html')
-    else:
-        form = RecetteForm()
-        return render_to_response('bento/recette.html', {'form': form})
+@login_required
+def modifrecette(request, id_recette):
+    if id_recette:
+        if len(request.GET) > 0:
+            # if form.is_valid():
+            pass

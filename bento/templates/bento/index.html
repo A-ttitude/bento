@@ -14,13 +14,41 @@
 
     <div class="content">
 
-        {% for recette in dernieres_recettes %}
-            <h3> {{ recette.titre }}</h3>
-            <p>{{ recette.etapes|truncatewords_html:80 }}</p>
-            <p><a href="{% url "bento.views.lire" recette.id %}"> Voir la recette</a> </p>
-            {% empty %}
-            <p> Aucune recette encore ajoutée</p>
-        {%  endfor %}
+        {% if object_list %}
+            <table class="pure-table pure-table-bordered" width="100%">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Type</th>
+                    <th>Difficulte</th>
+                    <th>Note</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for recette in object_list %}
+                    <tr style="cursor: pointer;" title="Consulter la recette"
+                        onclick="document.location='{% url 'bento:voirrecette' recette.id %}';">
+                        <td>{{ recette.titre }}</td>
+                        <td>{{ recette.auteur }}</td>
+                        <td>{{ recette.get_type_display }}</td>
+                        <td>{{ recette.get_difficulte_display }}</td>
+                        <td>{{ recette.note_moyenne }}</td>
+                        <td width="50px">
+                            <a href="{% url 'bento:voirrecette' recette.id %}"
+                               class="pure-button pure-button-primary" title="Consulter la recette">Consulter</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table><br/>
+        {% else %}
+            <p>Il n'y a aucune recette actuellement !</p>
+        {% endif %}
+
+        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:ajoutrecette' %}">Ajouter une
+            recette</a>
 
     </div>
 

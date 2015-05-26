@@ -1,3 +1,9 @@
 div .content form {
     text-align: center;
 }
+
+.errorlist {
+    color: red;
+    font-weight: bold;
+    list-style-type: none;
+}

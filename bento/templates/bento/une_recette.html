@@ -1,0 +1,32 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | {{ recette.titre }}
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>{{ recette.titre }}</h1>
+
+        <h2>{{ recette.get_type_display }} - {{ recette.get_difficulte_display }}</h2>
+    </div>
+
+    <div class="content">
+
+         <p>{{ recette.auteur }}</p>
+         <p>{{ recette.cout }}</p>
+         <p>{{ recette.temps_preparation }}</p>
+         <p>{{ recette.temps_cuisson }}</p>
+         <p>{{ recette.temps_repos }}</p>
+         <p>{{ recette.ingredients }}</p>
+         <p>{{ recette.etape }}</p>
+         <p>{{ recette.note_moyenne }}</p>
+         <p><img src="{{ recette.photo }}" /></p>
+
+
+        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:index' %}">Retour à la liste</a>
+
+    </div>
+
+{% endblock %}

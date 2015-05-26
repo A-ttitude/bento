@@ -1,0 +1,35 @@
+{% extends 'bento/_base.html' %}
+
+{% block titre %}
+    Bento | Connexion
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="header">
+        <h1>Bento</h1>
+
+        <h2>Connexion</h2>
+    </div>
+
+    <div class="content">
+
+        <form method="post" action="{% url 'bento:connexion' %}" class="pure-form pure-form-stacked">
+
+            {% if messages %}
+                <ul class="errorlist">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% csrf_token %}
+            {{ formulaire }}
+            <br /><br />
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Se connecter</button><br />
+            <a class="pure-button pure-input-1-2" href="{% url 'bento:inscription' %}">Inscription</a>
+        </form>
+
+    </div>
+{% endblock %}
