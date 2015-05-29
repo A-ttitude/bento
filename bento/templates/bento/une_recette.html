@@ -23,8 +23,9 @@
          <p>{{ recette.etape }}</p>
          <p>{{ recette.note_moyenne }}</p>
          <p><img src="{{ recette.photo }}" /></p>
-
-
+        {% if recette.auteur == username  %}
+        <a button type="submit" class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:index' %}">Supprimer la recette</a>
+        {% endif %}
         <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:index' %}">Retour à la liste</a>
 
     </div>

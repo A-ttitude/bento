@@ -86,5 +86,18 @@ def ajoutrecette(request):
 def modifrecette(request, id_recette):
     if id_recette:
         if len(request.GET) > 0:
-            # if form.is_valid():
-            pass
+            formulaire = RecetteForm(request.GET)
+            if formulaire.is_valid():
+                formulaire.save(commit=True)
+                return render(request, 'bento/index.html', {'formulaire': formulaire})
+            return render(request, 'bento/modifrecette.html', {'formulaire': formulaire})
+
+
+@login_required
+def supprecette(request, id_recette):
+    if id_recette:
+        formulaire = RecetteForm(id_recette)
+        if formulaire.is_valid():
+            formulaire.delete(commit=True)
+            return render(request, 'bento/index.html', {'formulaire': formulaire})
+        return render(request, 'bento/index.html', {'formulaire': formulaire})
