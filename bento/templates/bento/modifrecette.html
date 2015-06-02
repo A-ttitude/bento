@@ -14,14 +14,14 @@
 
     <div class="content">
 
-        <form method="post" action="{% url 'bento:modifrecette' %}"  class="pure-form pure-form-stacked">
+        <form method="post" action="/modifrecette/{{ id_recette }}" class="pure-form pure-form-stacked">
             {% csrf_token %}
             {{ formulaire }}
-            <br /><br />
-             {% if recette.auteur == username  %}
-            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Modifier</button><br />
-             {% endif %}
-            <a class="pure-button pure-input-1-2" href="{{request.META.HTTP_REFERER}}">Retour</a>
+            <br/><br/>
+            {% if recette.auteur == username %}
+                <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Modifier</button><br/>
+            {% endif %}
+            <a class="pure-button pure-input-1-2" href="{{ request.META.HTTP_REFERER }}">Retour</a>
         </form>
 
     </div>

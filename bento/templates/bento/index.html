@@ -14,6 +14,14 @@
 
     <div class="content">
 
+        {% if messages %}
+            <ul class="errorlist">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         {% if object_list %}
             <table class="pure-table pure-table-bordered" width="100%">
                 <thead>
@@ -47,7 +55,7 @@
             <p>Il n'y a aucune recette actuellement !</p>
         {% endif %}
 
-        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:ajoutrecette' %}">Ajouter une
+        <a class="pure-button green-button pure-input-1-2" href="{% url 'bento:ajoutrecette' %}">Ajouter une
             recette</a>
 
     </div>

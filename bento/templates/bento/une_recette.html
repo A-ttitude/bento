@@ -14,19 +14,37 @@
 
     <div class="content">
 
-         <p>{{ recette.auteur }}</p>
-         <p>{{ recette.cout }}</p>
-         <p>{{ recette.temps_preparation }}</p>
-         <p>{{ recette.temps_cuisson }}</p>
-         <p>{{ recette.temps_repos }}</p>
-         <p>{{ recette.ingredients }}</p>
-         <p>{{ recette.etape }}</p>
-         <p>{{ recette.note_moyenne }}</p>
-         <p><img src="{{ recette.photo }}" /></p>
-        {% if recette.auteur == username  %}
-        <a button type="submit" class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:index' %}">Supprimer la recette</a>
+        <p>{{ recette.auteur }}</p>
+
+        <p>{{ recette.cout }}</p>
+
+        <p>{{ recette.temps_preparation }}</p>
+
+        <p>{{ recette.temps_cuisson }}</p>
+
+        <p>{{ recette.temps_repos }}</p>
+
+        <p>{{ recette.ingredients }}</p>
+
+        <p>{{ recette.etape }}</p>
+
+        <p>{{ recette.note_moyenne }}</p>
+
+        <p><img src="{{ recette.photo }}"/></p>
+
+        {% if recette.auteur == user %}
+            <p>
+                <a class="pure-button pure-button-primary pure-input-1-2"
+                   href="{% url 'bento:modifrecette' recette.id %}">Modifier</a>
+                <a class="pure-button red-button pure-input-1-2"
+                   href="{% url 'bento:supprecette' recette.id %}">Supprimer</a>
+            </p>
         {% endif %}
-        <a class="pure-button pure-button-primary pure-input-1-2" href="{% url 'bento:index' %}">Retour à la liste</a>
+        <p>
+            <a class="pure-button pure-input-1-2" href="{% url 'bento:index' %}">
+                Retour à la liste
+            </a>
+        </p>
 
     </div>
 
