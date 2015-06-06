@@ -1,0 +1,488 @@
+[
+  {
+    "pk": 1,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "logentry",
+      "app_label": "admin"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "permission",
+      "app_label": "auth"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "group",
+      "app_label": "auth"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "user",
+      "app_label": "auth"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "contenttype",
+      "app_label": "contenttypes"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "session",
+      "app_label": "sessions"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "recette",
+      "app_label": "bento"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "commentaires",
+      "app_label": "bento"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "vote",
+      "app_label": "bento"
+    }
+  },
+  {
+    "pk": "i4c19kxmvf5rvm9gqoib6zoqxnm3h0lh",
+    "model": "sessions.session",
+    "fields": {
+      "session_data": "NDAxZWIyOTJmNTkzMDU0YTgxMDgyOGE4MTdhYTg3ZDI4Zjc0ZDEyNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImIyMDBlMDc1ZDk3NzE0YzA3Y2VjZjBkYzMyNTI5YzQyYzQ2MjEwNTIiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=",
+      "expire_date": "2015-06-20T16:17:36.359Z"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 1,
+      "name": "Can add log entry",
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 1,
+      "name": "Can change log entry",
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 1,
+      "name": "Can delete log entry",
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 2,
+      "name": "Can add permission",
+      "codename": "add_permission"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 2,
+      "name": "Can change permission",
+      "codename": "change_permission"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 2,
+      "name": "Can delete permission",
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 3,
+      "name": "Can add group",
+      "codename": "add_group"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 3,
+      "name": "Can change group",
+      "codename": "change_group"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 3,
+      "name": "Can delete group",
+      "codename": "delete_group"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 4,
+      "name": "Can add user",
+      "codename": "add_user"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 4,
+      "name": "Can change user",
+      "codename": "change_user"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 4,
+      "name": "Can delete user",
+      "codename": "delete_user"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 5,
+      "name": "Can add content type",
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 5,
+      "name": "Can change content type",
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 5,
+      "name": "Can delete content type",
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 6,
+      "name": "Can add session",
+      "codename": "add_session"
+    }
+  },
+  {
+    "pk": 17,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 6,
+      "name": "Can change session",
+      "codename": "change_session"
+    }
+  },
+  {
+    "pk": 18,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 6,
+      "name": "Can delete session",
+      "codename": "delete_session"
+    }
+  },
+  {
+    "pk": 19,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 7,
+      "name": "Can add Recette",
+      "codename": "add_recette"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 7,
+      "name": "Can change Recette",
+      "codename": "change_recette"
+    }
+  },
+  {
+    "pk": 21,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 7,
+      "name": "Can delete Recette",
+      "codename": "delete_recette"
+    }
+  },
+  {
+    "pk": 22,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 8,
+      "name": "Can add Commentaire",
+      "codename": "add_commentaires"
+    }
+  },
+  {
+    "pk": 23,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 8,
+      "name": "Can change Commentaire",
+      "codename": "change_commentaires"
+    }
+  },
+  {
+    "pk": 24,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 8,
+      "name": "Can delete Commentaire",
+      "codename": "delete_commentaires"
+    }
+  },
+  {
+    "pk": 25,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 9,
+      "name": "Can add Vote",
+      "codename": "add_vote"
+    }
+  },
+  {
+    "pk": 26,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 9,
+      "name": "Can change Vote",
+      "codename": "change_vote"
+    }
+  },
+  {
+    "pk": 27,
+    "model": "auth.permission",
+    "fields": {
+      "content_type": 9,
+      "name": "Can delete Vote",
+      "codename": "delete_vote"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "first_name": "",
+      "date_joined": "2015-06-06T15:58:55.162Z",
+      "is_superuser": true,
+      "groups": [],
+      "username": "admin",
+      "is_active": true,
+      "email": "",
+      "is_staff": true,
+      "user_permissions": [],
+      "last_login": "2015-06-06T16:17:36.338Z",
+      "last_name": "",
+      "password": "pbkdf2_sha256$20000$FQbWatTkdt2w$kbm1k9cWs7bSFBcMAR12WXKX9kdxVFvuV9RsdjdWKuI="
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "first_name": "toto",
+      "date_joined": "2015-06-06T16:04:56.574Z",
+      "is_superuser": false,
+      "groups": [],
+      "username": "toto",
+      "is_active": true,
+      "email": "toto@toto.fr",
+      "is_staff": false,
+      "user_permissions": [],
+      "last_login": "2015-06-06T16:05:04.131Z",
+      "last_name": "toto",
+      "password": "pbkdf2_sha256$20000$conGvT7jnKDP$1R0RaWJSZ6SCzdGTr8d+AXSQtpsQX2hvpdeBY7zszIw="
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
+    "fields": {
+      "first_name": "bibi",
+      "date_joined": "2015-06-06T16:11:49.398Z",
+      "is_superuser": false,
+      "groups": [],
+      "username": "bibi",
+      "is_active": true,
+      "email": "bibi@bibi.fr",
+      "is_staff": false,
+      "user_permissions": [],
+      "last_login": "2015-06-06T16:11:51.408Z",
+      "last_name": "bibi",
+      "password": "pbkdf2_sha256$20000$c7QtWYTQb8W5$IWvq6zs2xqZZkyRszFYUGEICjuH/OIss0m9rXNjlHxQ="
+    }
+  },
+  {
+    "pk": 1,
+    "model": "bento.recette",
+    "fields": {
+      "ingredients": "1 p\u00e2te bris\u00e9e\r\n2 \u0153ufs\r\nsel et poivre\r\nune dizaine de tranches de fromage \u00e0 raclette\r\n3 tranches de jambon blanc\r\n7 pommes de terre\r\n40 cl de lait",
+      "titre": "Quich'clette",
+      "temps_cuisson": "00:35:00",
+      "auteur": 1,
+      "cout": "0.00",
+      "photo": "http://www.cuisineactuelle.fr/var/cui/storage/images/recettes-de-cuisine/type-de-plat/plat-principal/quich-clette/1925526-1-fre-FR/quich-clette_16-8-750x373-user.jpg",
+      "difficulte": 1,
+      "note_moyenne": 2,
+      "type": 2,
+      "temps_preparation": "00:15:00",
+      "etape": "Disposer la p\u00e2te bris\u00e9e dans un moule \u00e0 tarte.\r\nPr\u00e9chauffer \u00e0 180\u00b0C.\r\nPiquer le fond de p\u00e2te avec une fourchette. \r\nCouper les pommes de terre en morceaux pas trop gros et les d\u00e9poser sur la p\u00e2te. \r\nCouper le jambon en morceaux et les d\u00e9poser sur les pommes de terre.\r\nDans un petit saladier : m\u00e9langer les \u0153ufs avec le lait, saler et poivrer. \r\nVerser cette pr\u00e9paration dans le moule.\r\nCouper le fromage en tranches et les d\u00e9poser sur toute la surface.\r\nEnfourner pendant 35 minutes.",
+      "temps_repos": "00:00:00"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "bento.recette",
+    "fields": {
+      "ingredients": "6 cl de jus de fruits de la passion\r\n2 cl d\u2019ap\u00e9ritif anis\u00e9\r\n1 filet de grenadine\r\neau gazeuse",
+      "titre": "Fruit de la passion cocktail",
+      "temps_cuisson": "00:00:00",
+      "auteur": 2,
+      "cout": "5.00",
+      "photo": "http://www.cuisineactuelle.fr/var/cui/storage/images/recettes-de-cuisine/recettes-thematiques/recette-facile/acapulco/608548-2-fre-FR/acapulco_16-8-750x373.jpg",
+      "difficulte": 2,
+      "note_moyenne": 1,
+      "type": 1,
+      "temps_preparation": "00:05:00",
+      "etape": "Placez un verre au cong\u00e9lateur.\r\nVersez dans le verre glac\u00e9 le jus de fruits de la passion, l\u2019ap\u00e9ritif anis\u00e9, la grenadine.\r\nCompl\u00e9tez avec de l\u2019eau gazeuse et servez sans attendre.",
+      "temps_repos": "00:00:00"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "bento.recette",
+    "fields": {
+      "ingredients": "6 oeufs\r\n200 g de longe de porc\r\n100 g de crevettes d\u00e9cortiqu\u00e9es\r\n200 g de germes de soja frais\r\n100 g de champignons de Paris\r\n1 oignon\r\n3 gousses d'ail\r\n1 cuil. \u00e0 caf\u00e9 de sucre semoule\r\n2 cuil. \u00e0 soupe de sauce soja\r\n10 cl de vin blanc sec\r\n2 branches de menthe\r\n2 brins de coriandre\r\n1 bouquet de ciboule\r\n10 cl d'huile\r\nsel, poivre",
+      "titre": "Cr\u00eapes chinoises (omelette)",
+      "temps_cuisson": "00:20:00",
+      "auteur": 3,
+      "cout": "40.00",
+      "photo": "http://www.cuisineactuelle.fr/var/cui/storage/images/recettes-de-cuisine/recettes-pour-tous/en-amoureux/crepes-chinoises-omelette/140633-9-fre-FR/crepes-chinoises-omelette_16-8-750x373.jpg",
+      "difficulte": 3,
+      "note_moyenne": 0,
+      "type": 3,
+      "temps_preparation": "00:20:00",
+      "etape": "\u00c9pluchez et hachez l'ail. D\u00e9coupez la viande en fines lamelles, mettez-la dans un plat, arrosez de la moiti\u00e9 de vin blanc, ajoutez une cuiller\u00e9e \u00e0 soupe de sauce soja, la moiti\u00e9 de l'ail hach\u00e9, le sucre semoule et assaisonnez de sel et poivre. Laissez mariner 30 min.\r\nMettez les crevettes d\u00e9cortiqu\u00e9es dans un plat, arrosez-les avec le reste de vin blanc, une cuiller\u00e9e \u00e0 soupe de soja, l'ail hach\u00e9 et assaisonnez de sel, poivre et laisser mariner 30 min.\r\nEpluchez l'oignon et \u00e9mincez-le, lavez les herbes, hachez la ciboule. Cassez les \u0153ufs dans un saladier, ajoutez une cuiller\u00e9e \u00e0 soupe d'eau par \u0153uf, assaisonnez de sel et poivre, puis compl\u00e9ter avec de la ciboule hach\u00e9e ; battez l'ensemble en omelette.\r\nFaites chauffer une cuiller\u00e9e \u00e0 soupe d'huile dans une po\u00eale. D\u00e8s qu'elle est chaude, mettez-y les germes de soja, assaisonnez de sel et poivre et faites sauter 1 min, puis r\u00e9servez au chaud. R\u00e9p\u00e9tez la m\u00eame op\u00e9ration avec l'oignon et les champignons \u00e9minc\u00e9s. Puis \u00e9gouttez la viande et faites-la aussi revenir dans l'huile. Faites de m\u00eame avec les crevettes; r\u00e9servez tous ces ingr\u00e9dients au chaud.\r\nDans une petite po\u00eale, faites chauffer une cuiller\u00e9e \u00e0 soupe d'huile. Quand la po\u00eale est bien chaude, versez la valeur d'une petite louche d'\u0153ufs battus en omelette, remuez avec la fourchette. D\u00e8s que la pr\u00e9paration est prise, retournez la fine omelette comme une cr\u00eape. Quand elle est cuite, faites-la glisser sur une assiette. Garnissez-la avec le m\u00e9lange porc, crevettes, soja, oignon, champignons et repliez-la sur elle-m\u00eame, ajoutez les feuilles de menthe et les brins de coriandre. R\u00e9p\u00e9tez la m\u00eame op\u00e9ration pour chacune des assiettes.",
+      "temps_repos": "00:00:00"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "bento.commentaires",
+    "fields": {
+      "contenu": "Bien gourmande cette quiche :)",
+      "auteur": 2,
+      "recette": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "bento.commentaires",
+    "fields": {
+      "contenu": "App\u00e9tissant !",
+      "auteur": 3,
+      "recette": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "bento.vote",
+    "fields": {
+      "utilisateur": 1,
+      "recette": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "bento.vote",
+    "fields": {
+      "utilisateur": 1,
+      "recette": 2
+    }
+  },
+  {
+    "pk": 3,
+    "model": "bento.vote",
+    "fields": {
+      "utilisateur": 3,
+      "recette": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "admin.logentry",
+    "fields": {
+      "object_repr": "[toto] Fruit de la passion cocktail - Ap\u00e9ritif Facile",
+      "content_type": 7,
+      "change_message": "Modifi\u00e9 auteur.",
+      "user": 1,
+      "object_id": "2",
+      "action_flag": 2,
+      "action_time": "2015-06-06T16:11:20.554Z"
+    }
+  }
+]
