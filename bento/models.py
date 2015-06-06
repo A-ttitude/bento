@@ -16,14 +16,15 @@ DifficulteRecette = (
 )
 
 CategorieRecette = (
-    (1, _('Entrée')),
-    (2, _('Plat')),
-    (3, _('Dessert')),
-    (4, _('Apéritif')),
-    (5, _('Fromage')),
-    (6, _('Viande')),
-    (7, _('Poisson')),
-    (8, _('Fruit')),
+    (1, _('Apéritif')),
+    (2, _('Entrée')),
+    (3, _('Plat')),
+    (4, _('Dessert')),
+    (5, _('Légume')),
+    (6, _('Poisson')),
+    (7, _('Viande')),
+    (8, _('Fromages')),
+    (9, _('Fruits')),
 )
 
 
@@ -35,12 +36,12 @@ class Recette(models.Model):
     cout = models.DecimalField(verbose_name=_("Coût"), decimal_places=2, max_digits=12,
                                validators=[MinValueValidator(Decimal('0.00'))])
     temps_preparation = models.TimeField(verbose_name=_("Temps de préparation"))
-    temps_cuisson = models.TimeField(verbose_name=_("Temps de cuisson"), blank=True, null=True)
-    temps_repos = models.TimeField(verbose_name=_("Temps de repos"), blank=True, null=True)
+    temps_cuisson = models.TimeField(verbose_name=_("Temps de cuisson"))
+    temps_repos = models.TimeField(verbose_name=_("Temps de repos"))
     ingredients = models.TextField(verbose_name=_("Ingrédients"))
     etape = models.TextField(verbose_name=_("Etapes"))
     note_moyenne = models.PositiveSmallIntegerField(verbose_name=_("Note obtenue"), default=0)
-    photo = models.TextField(verbose_name=_("Photos"), blank=True, null=True)
+    photo = models.TextField(verbose_name=_("Photos"))
 
     def __str__(self):
         return '[' + self.auteur.username + '] ' + self.titre + ' - ' + self.get_type_display() + ' ' \
@@ -52,11 +53,25 @@ class Recette(models.Model):
 
 
 class Commentaires(models.Model):
-    titre_c = models.CharField(max_length=500, verbose_name=_("Titre"))
     auteur = models.ForeignKey(User, verbose_name=_("Auteur"))
     recette = models.ForeignKey(Recette, verbose_name=_("Recette"))
     contenu = models.TextField(verbose_name=_("Contenu"))
 
+    def __str__(self):
+        return '[' + self.recette.titre + '] [' + self.auteur.username + '] ' + self.contenu
+
     class Meta:
         verbose_name = _("Commentaire")
         verbose_name_plural = _("Commentaires")
+
+
+class Vote(models.Model):
+    utilisateur = models.ForeignKey(User, verbose_name=_("Utilisateur"))
+    recette = models.ForeignKey(Recette, verbose_name=_("Recette"))
+
+    def __str__(self):
+        return self.utilisateur.username + ' | ' + self.recette.titre
+
+    class Meta:
+        verbose_name = _("Vote")
+        verbose_name_plural = _("Votes")

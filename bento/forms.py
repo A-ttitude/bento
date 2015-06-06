@@ -119,10 +119,6 @@ class RecetteForm(forms.ModelForm):
 
 
 class CommentaireForm(forms.ModelForm):
-    titre_c = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Titre'),
-                                                                      'class': 'pure-input-1-2',
-                                                                      'style': 'display: inline;'}))
-
     auteur = forms.ModelChoiceField(label='', queryset=User.objects.all(),
                                     widget=forms.TextInput(attrs={'readonly': 'readonly',
                                                                   'style': 'display: none;'}))
@@ -137,4 +133,4 @@ class CommentaireForm(forms.ModelForm):
 
     class Meta:
         model = Commentaires
-        fields = ('titre_c', 'auteur', 'recette', 'contenu')
+        fields = ('auteur', 'recette', 'contenu')

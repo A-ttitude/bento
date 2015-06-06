@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from bento.forms import ConnexionForm, InscriptionForm, RecetteForm, CommentaireForm
-from bento.models import Recette, Commentaires
+from bento.models import Recette, Commentaires, Vote
 
 
 # Class
@@ -148,6 +148,28 @@ def commentrecette(request, id_recette):
                 formulaire = CommentaireForm(initial={'auteur': request.user, 'recette': recette})
                 return render(request, 'bento/commentairerecette.html',
                               {'id_recette': id_recette, 'formulaire': formulaire})
+
+        return redirect('/recette/' + id_recette)
+
+    except Recette.DoesNotExist:
+        messages.error(request, _('Cette recette n\'existe pas.'))
+
+    return redirect('/index')
+
+
+@login_required
+def voterrecette(request, id_recette):
+    try:
+        recette = Recette.objects.get(pk=id_recette)
+
+        if id_recette:
+            if not Vote.objects.filter(utilisateur=request.user, recette=recette):
+                vote = Vote(utilisateur=request.user, recette=recette)
+                vote.save()
+                recette.note_moyenne += 1
+                recette.save()
+            else:
+                messages.error(request, _('Vous avez déjà voté pour cette recette !'))
 
         return redirect('/recette/' + id_recette)
 
