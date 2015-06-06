@@ -32,18 +32,45 @@
 
         <p><img src="{{ recette.photo }}"/></p>
 
-        {% if recette.auteur == user %}
-            <p>
+        <p>
+            {% if recette.auteur == user %}
                 <a class="pure-button pure-button-primary pure-input-1-2"
                    href="{% url 'bento:modifrecette' recette.id %}">Modifier</a>
                 <a class="pure-button red-button pure-input-1-2"
                    href="{% url 'bento:supprecette' recette.id %}">Supprimer</a>
-            </p>
-        {% endif %}
+            {% endif %}
+        </p>
+
         <p>
             <a class="pure-button pure-input-1-2" href="{% url 'bento:index' %}">
                 Retour à la liste
             </a>
+        </p>
+
+    </div>
+
+    <div class="header">
+        <h2>Commentaires</h2>
+    </div>
+
+    <div class="content">
+
+        <p>
+            {% if request.commentaires %}
+                {% for c in request.commentaires %}
+                    {{ c.auteur.username }}<br/>
+                    {{ c.titre_c }}<br/>
+                    {{ c.contenu }}
+                    <hr/>
+                {% endfor %}
+            {% else %}
+                Aucun commentaire pour cette recette.
+            {% endif %}
+        </p>
+
+        <p>
+            <a class="pure-button pure-button-primary pure-input-1-2"
+               href="{% url 'bento:commentrecette' recette.id %}">Commenter</a>
         </p>
 
     </div>

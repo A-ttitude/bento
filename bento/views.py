@@ -8,8 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
-from bento.forms import ConnexionForm, InscriptionForm, RecetteForm
-from bento.models import Recette
+from bento.forms import ConnexionForm, InscriptionForm, RecetteForm, CommentaireForm
+from bento.models import Recette, Commentaires
 
 
 # Class
@@ -26,6 +26,7 @@ class VoirRecette(DetailView):
     def get(self, request, *args, **kwargs):
         try:
             setattr(self, 'object', self.get_object())
+            setattr(request, 'commentaires', Commentaires.objects.filter(recette=self.get_object()))
         except Http404:
             messages.error(request, _('Cette recette n\'existe pas.'))
             return redirect('/index')
@@ -106,7 +107,8 @@ def modifrecette(request, id_recette):
             else:
                 if id_recette:
                     formulaire = RecetteForm(instance=recette)
-                    return render(request, 'bento/modifrecette.html', {'id_recette': id_recette, 'formulaire': formulaire})
+                    return render(request, 'bento/modifrecette.html',
+                                  {'id_recette': id_recette, 'formulaire': formulaire})
         else:
             messages.error(request, _('Vous n\'êtes pas l\'auteur de cette recette.'))
 
@@ -128,5 +130,28 @@ def supprecette(request, id_recette):
                 messages.error(request, _('Vous n\'êtes pas l\'auteur de cette recette.'))
         except Recette.DoesNotExist:
             messages.error(request, _('Cette recette n\'existe pas.'))
+
+    return redirect('/index')
+
+
+@login_required
+def commentrecette(request, id_recette):
+    try:
+        recette = Recette.objects.get(pk=id_recette)
+
+        if request.method == 'POST':
+            formulaire = CommentaireForm(request.POST, initial={'auteur': request.user, 'recette': recette})
+            if formulaire.is_valid():
+                formulaire.save(commit=True)
+        else:
+            if id_recette:
+                formulaire = CommentaireForm(initial={'auteur': request.user, 'recette': recette})
+                return render(request, 'bento/commentairerecette.html',
+                              {'id_recette': id_recette, 'formulaire': formulaire})
+
+        return redirect('/recette/' + id_recette)
+
+    except Recette.DoesNotExist:
+        messages.error(request, _('Cette recette n\'existe pas.'))
 
     return redirect('/index')

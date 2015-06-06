@@ -7,7 +7,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from bento.models import Recette, DifficulteRecette, CategorieRecette
+from bento.models import Recette, Commentaires, DifficulteRecette, CategorieRecette
 
 
 class ConnexionForm(forms.Form):
@@ -116,3 +116,25 @@ class RecetteForm(forms.ModelForm):
         model = Recette
         fields = ('titre', 'auteur', 'type', 'difficulte', 'cout', 'temps_preparation', 'temps_cuisson', 'temps_repos',
                   'ingredients', 'etape', 'photo')
+
+
+class CommentaireForm(forms.ModelForm):
+    titre_c = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Titre'),
+                                                                      'class': 'pure-input-1-2',
+                                                                      'style': 'display: inline;'}))
+
+    auteur = forms.ModelChoiceField(label='', queryset=User.objects.all(),
+                                    widget=forms.TextInput(attrs={'readonly': 'readonly',
+                                                                  'style': 'display: none;'}))
+
+    recette = forms.ModelChoiceField(label='', queryset=Recette.objects.all(),
+                                     widget=forms.TextInput(attrs={'readonly': 'readonly',
+                                                                   'style': 'display: none;'}))
+
+    contenu = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': _('Commentaire'),
+                                                                     'class': 'pure-input-1-2',
+                                                                     'style': 'display: inline;'}))
+
+    class Meta:
+        model = Commentaires
+        fields = ('titre_c', 'auteur', 'recette', 'contenu')
