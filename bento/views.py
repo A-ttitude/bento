@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.db.models import Q
 
 from bento.forms import ConnexionForm, InscriptionForm, RecetteForm, CommentaireForm
 from bento.models import Recette, Commentaires, Vote
@@ -17,6 +18,26 @@ from bento.models import Recette, Commentaires, Vote
 class Recettes(ListView):
     model = Recette
     template_name = 'bento/index.html'
+
+    def get_queryset(self):
+        try:
+            type_recette = self.kwargs['type']
+        except KeyError:
+            type_recette = ''
+
+        try:
+            args = self.kwargs['args']
+        except KeyError:
+            args = ''
+
+        if type_recette != '':
+            object_list = self.model.objects.filter(type=type_recette)
+        elif args != '':
+            object_list = self.model.objects.filter(Q(titre__contains=args) | Q(ingredients__contains=args))
+        else:
+            object_list = self.model.objects.all()
+
+        return object_list.order_by('note_moyenne').reverse()
 
 
 class VoirRecette(DetailView):
@@ -70,7 +91,7 @@ def inscription(request):
         formulaire = InscriptionForm(request.POST)
 
         if formulaire.is_valid():
-            formulaire.save(commit=True)
+            formulaire.save()
             return redirect('/connexion')
     else:
         formulaire = InscriptionForm()
@@ -84,7 +105,7 @@ def ajoutrecette(request):
         formulaire = RecetteForm(request.POST, initial={'auteur': request.user})
 
         if formulaire.is_valid():
-            formulaire.save(commit=True)
+            formulaire.save()
             return redirect('/index')
         else:
             return render(request, 'bento/ajoutrecette.html', {'formulaire': formulaire})
@@ -95,20 +116,20 @@ def ajoutrecette(request):
 
 
 @login_required
-def modifrecette(request, id_recette):
+def modifier(request, slug):
     try:
-        recette = Recette.objects.get(pk=id_recette)
+        recette = Recette.objects.get(slug=slug)
 
         if request.user == recette.auteur:
             if request.method == 'POST':
                 formulaire = RecetteForm(request.POST, instance=recette)
                 if formulaire.is_valid():
-                    formulaire.save(commit=True)
+                    formulaire.save()
             else:
-                if id_recette:
+                if slug:
                     formulaire = RecetteForm(instance=recette)
                     return render(request, 'bento/modifrecette.html',
-                                  {'id_recette': id_recette, 'formulaire': formulaire})
+                                  {'slug': slug, 'formulaire': formulaire})
         else:
             messages.error(request, _('Vous n\'êtes pas l\'auteur de cette recette.'))
 
@@ -119,10 +140,10 @@ def modifrecette(request, id_recette):
 
 
 @login_required
-def supprecette(request, id_recette):
-    if id_recette:
+def supprimer(request, slug):
+    if slug:
         try:
-            recette = Recette.objects.get(pk=id_recette)
+            recette = Recette.objects.get(slug=slug)
 
             if request.user == recette.auteur:
                 recette.delete()
@@ -135,21 +156,21 @@ def supprecette(request, id_recette):
 
 
 @login_required
-def commentrecette(request, id_recette):
+def commenter(request, slug):
     try:
-        recette = Recette.objects.get(pk=id_recette)
+        recette = Recette.objects.get(slug=slug)
 
         if request.method == 'POST':
             formulaire = CommentaireForm(request.POST, initial={'auteur': request.user, 'recette': recette})
             if formulaire.is_valid():
-                formulaire.save(commit=True)
+                formulaire.save()
         else:
-            if id_recette:
+            if slug:
                 formulaire = CommentaireForm(initial={'auteur': request.user, 'recette': recette})
                 return render(request, 'bento/commentairerecette.html',
-                              {'id_recette': id_recette, 'formulaire': formulaire})
+                              {'slug': slug, 'formulaire': formulaire})
 
-        return redirect('/recette/' + id_recette)
+        return redirect('/recette/' + slug)
 
     except Recette.DoesNotExist:
         messages.error(request, _('Cette recette n\'existe pas.'))
@@ -158,20 +179,19 @@ def commentrecette(request, id_recette):
 
 
 @login_required
-def voterrecette(request, id_recette):
+def voter(request, slug):
     try:
-        recette = Recette.objects.get(pk=id_recette)
+        recette = Recette.objects.get(slug=slug)
 
-        if id_recette:
-            if not Vote.objects.filter(utilisateur=request.user, recette=recette):
-                vote = Vote(utilisateur=request.user, recette=recette)
-                vote.save()
-                recette.note_moyenne += 1
-                recette.save()
-            else:
-                messages.error(request, _('Vous avez déjà voté pour cette recette !'))
+        if not Vote.objects.filter(utilisateur=request.user, recette=recette):
+            vote = Vote(utilisateur=request.user, recette=recette)
+            vote.save()
+            recette.note_moyenne += 1
+            recette.save()
+        else:
+            messages.error(request, _('Vous avez déjà voté pour cette recette !'))
 
-        return redirect('/recette/' + id_recette)
+        return redirect('/recette/' + slug)
 
     except Recette.DoesNotExist:
         messages.error(request, _('Cette recette n\'existe pas.'))

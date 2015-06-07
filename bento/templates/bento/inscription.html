@@ -17,9 +17,10 @@
         <form method="post" action="{% url 'bento:inscription' %}" class="pure-form pure-form-stacked">
             {% csrf_token %}
             {{ formulaire }}
-            <br /><br />
-            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Inscription</button><br />
-            <a class="pure-button pure-input-1-2" href="{{request.META.HTTP_REFERER}}">Retour</a>
+            <br/><br/>
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Inscription</button>
+            <br/>
+            <a class="pure-button pure-input-1-2" href="{{ request.META.HTTP_REFERER }}">Retour</a>
         </form>
 
     </div>

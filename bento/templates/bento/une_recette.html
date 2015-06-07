@@ -16,7 +16,17 @@
 
     <div class="content">
 
-        <p class="center"><img src="{{ recette.photo }}"/></p>
+        <p class="center">
+            {% if messages %}
+                <span class="errorlist">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </span>
+            {% endif %}
+
+            <img src="{{ recette.photo }}"/>
+        </p>
 
         <p><strong>Coût :</strong> {{ recette.cout }}€</p>
 
@@ -39,20 +49,15 @@
         <p>
             <strong>Note :</strong> {{ recette.note_moyenne }}<br/>
             <a class="pure-button green-button small-button" title="J'aime"
-               href="{% url 'bento:voterrecette' recette.id %}">J'aime</a>
-            {% if messages %}
-                {% for message in messages %}
-                    <span class="errorlist">{{ message }}</span>
-                {% endfor %}
-            {% endif %}
+               href="{% url 'bento:voter' recette.slug %}">J'aime</a>
         </p>
 
         <p>
             {% if recette.auteur == user %}
                 <a class="pure-button pure-button-primary pure-input-1-2"
-                   href="{% url 'bento:modifrecette' recette.id %}">Modifier</a>
+                   href="{% url 'bento:modifier' recette.slug %}">Modifier</a>
                 <a class="pure-button red-button pure-input-1-2"
-                   href="{% url 'bento:supprecette' recette.id %}">Supprimer</a>
+                   href="{% url 'bento:supprimer' recette.slug %}">Supprimer</a>
             {% endif %}
             <a class="pure-button pure-input-1-2" href="{% url 'bento:index' %}">
                 Retour à la liste
@@ -73,7 +78,7 @@
                     {{ commentaire.contenu }}<br/>
                     Par <strong>{{ commentaire.auteur.username }}</strong>
                 </p>
-                <hr />
+                <hr/>
             {% endfor %}
         {% else %}
             <p>Aucun commentaire pour cette recette.</p>
@@ -81,7 +86,7 @@
 
         <p>
             <a class="pure-button pure-button-primary pure-input-1-2"
-               href="{% url 'bento:commentrecette' recette.id %}">Commenter</a>
+               href="{% url 'bento:commenter' recette.slug %}">Commenter</a>
         </p>
 
     </div>

@@ -1,7 +1,10 @@
 # coding: utf-8
 
 from decimal import Decimal
+from itertools import count
+from datetime import datetime
 
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.contrib.auth.models import User
@@ -46,16 +49,28 @@ class InscriptionForm(UserCreationForm):
                                                                   'class': 'pure-input-1-2',
                                                                   'style': 'display: inline;'}))
 
+    def save(self, commit=True):
+        user = super(InscriptionForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.last_login = datetime.now()
+
+        if commit:
+            user.save()
+
+        return user
+
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
 
 class RecetteForm(forms.ModelForm):
-    titre = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Titre'),
-                                                                    'class': 'pure-input-1-2',
-                                                                    'style': 'display: inline;',
-                                                                    'required': 'required'}))
+    titre = forms.CharField(label=_('Titre'), widget=forms.TextInput(attrs={'placeholder': _('Titre'),
+                                                                            'class': 'pure-input-1-2',
+                                                                            'style': 'display: inline;',
+                                                                            'required': 'required'}))
 
     auteur = forms.ModelChoiceField(label='', queryset=User.objects.all(),
                                     widget=forms.TextInput(attrs={'readonly': 'readonly',
@@ -98,19 +113,35 @@ class RecetteForm(forms.ModelForm):
                                                                 'class': 'pure-input-1-2',
                                                                 'style': 'display: inline;'}))
 
-    ingredients = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': _('Ingrédients'),
-                                                                         'class': 'pure-input-1-2',
-                                                                         'style': 'display: inline;',
-                                                                         'required': 'required'}))
+    ingredients = forms.CharField(label=_('Ingrédients'), widget=forms.Textarea(attrs={'placeholder': _('Ingrédients'),
+                                                                                       'class': 'pure-input-1-2',
+                                                                                       'style': 'display: inline;',
+                                                                                       'required': 'required'}))
 
-    etape = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': _('Etapes'),
-                                                                   'class': 'pure-input-1-2',
-                                                                   'style': 'display: inline;',
-                                                                   'required': 'required'}))
+    etape = forms.CharField(label=_('Etapes'), widget=forms.Textarea(attrs={'placeholder': _('Etapes'),
+                                                                            'class': 'pure-input-1-2',
+                                                                            'style': 'display: inline;',
+                                                                            'required': 'required'}))
 
-    photo = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': _('Photo'),
-                                                                    'class': 'pure-input-1-2',
-                                                                    'style': 'display: inline;'}))
+    photo = forms.CharField(label=_('Photo'), widget=forms.TextInput(attrs={'placeholder': _('Photo'),
+                                                                            'class': 'pure-input-1-2',
+                                                                            'style': 'display: inline;'}))
+
+    def save(self):
+        max_length = 50
+
+        instance = super(RecetteForm, self).save(commit=False)
+        instance.slug = orig = slugify(instance.titre)[:max_length]
+
+        for x in count(1):
+            if not Recette.objects.filter(slug=instance.slug).exists():
+                break
+
+            instance.slug = "%s-%d" % (orig[:max_length - len(str(x)) - 1], x)
+
+        instance.save()
+
+        return instance
 
     class Meta:
         model = Recette

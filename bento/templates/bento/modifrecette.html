@@ -14,7 +14,7 @@
 
     <div class="content">
 
-        <form method="post" action="/modifrecette/{{ id_recette }}" class="pure-form pure-form-stacked">
+        <form method="post" action="/modifier/{{ slug }}" class="pure-form pure-form-stacked">
             {% csrf_token %}
             {{ formulaire }}
             <br/><br/>

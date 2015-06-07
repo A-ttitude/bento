@@ -37,14 +37,14 @@
                 <tbody>
                 {% for recette in object_list %}
                     <tr style="cursor: pointer;" title="Consulter la recette"
-                        onclick="document.location='{% url 'bento:voirrecette' recette.id %}';">
+                        onclick="document.location='{% url 'bento:recette' recette.slug %}';">
                         <td>{{ recette.titre }}</td>
                         <td>{{ recette.auteur }}</td>
                         <td>{{ recette.get_type_display }}</td>
                         <td>{{ recette.get_difficulte_display }}</td>
                         <td>{{ recette.note_moyenne }}</td>
                         <td width="50px">
-                            <a href="{% url 'bento:voirrecette' recette.id %}"
+                            <a href="{% url 'bento:recette' recette.slug %}"
                                class="pure-button pure-button-primary" title="Consulter la recette">Consulter</a>
                         </td>
                     </tr>
@@ -55,7 +55,7 @@
             <p>Il n'y a aucune recette actuellement !</p>
         {% endif %}
 
-        <a class="pure-button green-button pure-input-1-2" href="{% url 'bento:ajoutrecette' %}">Ajouter une
+        <a class="pure-button green-button pure-input-1-2" href="{% url 'bento:ajouter' %}">Ajouter une
             recette</a>
 
     </div>
