@@ -74,11 +74,6 @@ DATABASES = {
     }
 }
 
-PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
-FIXTURE_DIRS = (
-    os.path.join(PROJECT_DIR, '../bento/fixtures'),
-)
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -98,3 +93,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/connexion'
+
+# PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+# FIXTURE_DIRS = (
+#     os.path.join(PROJECT_DIR, '../bento/fixtures'),
+# )
