@@ -1,12 +1,32 @@
-<a class="pure-menu-heading" href="{% url 'bento:index' %}">Bento</a>
+<a class="pure-menu-heading">Bento</a>
 
 <ul class="pure-menu-list">
     {% if not user.is_authenticated %}
         <li class="pure-menu-item"><a href="{% url 'bento:connexion' %}" class="pure-menu-link">Connexion</a></li>
         <li class="pure-menu-item"><a href="{% url 'bento:inscription' %}" class="pure-menu-link">Inscription</a></li>
     {% else %}
-        <li class="pure-menu-item"><a href="" class="pure-menu-link">{{ user.username }}</a></li>
+        <li class="pure-menu-item"><a class="pure-menu-link">{{ user.username }}</a></li>
         <li class="pure-menu-item"><a href="{% url 'bento:deconnexion' %}" class="pure-menu-link">Déconnexion</a></li>
     {% endif %}
-    <li class="pure-menu-item"><a href="{% url 'bento:index' %}" class="pure-menu-link menu-item-divided">Accueil</a></li>
+    <li class="pure-menu-item">
+        <a href="{% url 'bento:index' %}" class="pure-menu-link menu-item-divided">Accueil</a>
+        <a href="{% url 'bento:index' type=1 %}" class="pure-menu-link menu-item-divided">Apéritif</a>
+        <a href="{% url 'bento:index' type=2 %}" class="pure-menu-link">Entrée</a>
+        <a href="{% url 'bento:index' type=3 %}" class="pure-menu-link">Plat</a>
+        <a href="{% url 'bento:index' type=4 %}" class="pure-menu-link">Dessert</a>
+        <a href="{% url 'bento:index' type=5 %}" class="pure-menu-link">Légume</a>
+        <a href="{% url 'bento:index' type=6 %}" class="pure-menu-link">Poisson</a>
+        <a href="{% url 'bento:index' type=7 %}" class="pure-menu-link">Viande</a>
+        <a href="{% url 'bento:index' type=8 %}" class="pure-menu-link">Fromages</a>
+        <a href="{% url 'bento:index' type=9 %}" class="pure-menu-link">Fruits</a>
+
+        <input type="text" id="searchBox" class="search" placeholder="Recherche"
+               onkeydown="if(event.keyCode == 13) return searchURL()"/>
+    </li>
 </ul>
+
+<script type="text/javascript">
+    function searchURL() {
+        window.location = '/index/' + document.getElementById('searchBox').value;
+    }
+</script>

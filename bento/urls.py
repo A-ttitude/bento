@@ -2,19 +2,21 @@
 
 from django.conf.urls import patterns, url
 
-from bento.views import connexion, deconnexion, inscription, Recettes, ajoutrecette, modifrecette, VoirRecette, \
-    commentrecette, supprecette, voterrecette
+from bento.views import connexion, deconnexion, inscription, Recettes, ajoutrecette, modifier, VoirRecette, commenter, \
+    supprimer, voter
 
 urlpatterns = patterns('',
                        url(r'^$', Recettes.as_view(), name='index'),
                        url(r'^index$', Recettes.as_view(), name='index'),
+                       url(r'^index/(?P<type>\d+)$', Recettes.as_view(), name='index'),
+                       url(r'^index/(?P<args>\w+)$', Recettes.as_view(), name='index'),
                        url(r'^connexion$', connexion, name='connexion'),
                        url(r'^deconnexion$', deconnexion, name='deconnexion'),
                        url(r'^inscription$', inscription, name='inscription'),
-                       url(r'^ajoutrecette$', ajoutrecette, name='ajoutrecette'),
-                       url(r'^modifrecette/(?P<id_recette>\d+)$', modifrecette, name='modifrecette'),
-                       url(r'^voterrecette/(?P<id_recette>\d+)$', voterrecette, name='voterrecette'),
-                       url(r'^commentrecette/(?P<id_recette>\d+)$', commentrecette, name='commentrecette'),
-                       url(r'^recette/(?P<pk>\d+)$', VoirRecette.as_view(), name='voirrecette'),
-                       url(r'^supprecette/(?P<id_recette>\d+)$', supprecette, name='supprecette'),
+                       url(r'^ajouter', ajoutrecette, name='ajouter'),
+                       url(r'^recette/(?P<slug>[\w-]+)$', VoirRecette.as_view(), name='recette'),
+                       url(r'^modifier/(?P<slug>[\w-]+)$', modifier, name='modifier'),
+                       url(r'^voter/(?P<slug>[\w-]+)$', voter, name='voter'),
+                       url(r'^commenter/(?P<slug>[\w-]+)$', commenter, name='commenter'),
+                       url(r'^supprimer/(?P<slug>[\w-]+)$', supprimer, name='supprimer'),
                        )

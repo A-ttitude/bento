@@ -42,10 +42,10 @@ class Recette(models.Model):
     etape = models.TextField(verbose_name=_("Etapes"))
     note_moyenne = models.PositiveSmallIntegerField(verbose_name=_("Note obtenue"), default=0)
     photo = models.TextField(verbose_name=_("Photos"))
+    slug = models.SlugField(unique=True, max_length=50)
 
     def __str__(self):
-        return '[' + self.auteur.username + '] ' + self.titre + ' - ' + self.get_type_display() + ' ' \
-               + self.get_difficulte_display()
+        return self.slug
 
     class Meta:
         verbose_name = _("Recette")

@@ -26,8 +26,9 @@
 
             {% csrf_token %}
             {{ formulaire }}
-            <br /><br />
-            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Se connecter</button><br />
+            <br/><br/>
+            <button type="submit" class="pure-button pure-button-primary pure-input-1-2">Se connecter</button>
+            <br/>
             <a class="pure-button pure-input-1-2" href="{% url 'bento:inscription' %}">Inscription</a>
         </form>
 

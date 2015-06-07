@@ -14,7 +14,7 @@
 
     <div class="content">
 
-        <form method="post" action="{% url 'bento:ajoutrecette' %}" class="pure-form pure-form-stacked">
+        <form method="post" action="{% url 'bento:ajouter' %}" class="pure-form pure-form-stacked">
             {% csrf_token %}
             {{ formulaire }}
             <br/><br/>
